@@ -6,12 +6,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 // hiredate is not mapped: the page does not show it
 @Entity
+@Data
 @Table(name = "emp")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Emp {
 
     @Id
@@ -21,9 +29,13 @@ public class Emp {
 
     private String job;
 
-    // the manager is another row of emp (self-join on emp.mgr)
+    // the manager is another row of emp (self-join on emp.mgr).
+    // Left out of toString/equals/hashCode: they would walk up the manager chain
+    // and load lazy rows outside the database session.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mgr")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Emp mgr;
 
     private BigDecimal sal;
@@ -32,71 +44,9 @@ public class Emp {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptno")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Dept dept;
 
     private String img;
-
-    public Integer getEmpno() {
-        return empno;
-    }
-
-    public void setEmpno(Integer empno) {
-        this.empno = empno;
-    }
-
-    public String getEname() {
-        return ename;
-    }
-
-    public void setEname(String ename) {
-        this.ename = ename;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public Emp getMgr() {
-        return mgr;
-    }
-
-    public void setMgr(Emp mgr) {
-        this.mgr = mgr;
-    }
-
-    public BigDecimal getSal() {
-        return sal;
-    }
-
-    public void setSal(BigDecimal sal) {
-        this.sal = sal;
-    }
-
-    public BigDecimal getComm() {
-        return comm;
-    }
-
-    public void setComm(BigDecimal comm) {
-        this.comm = comm;
-    }
-
-    public Dept getDept() {
-        return dept;
-    }
-
-    public void setDept(Dept dept) {
-        this.dept = dept;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
 }

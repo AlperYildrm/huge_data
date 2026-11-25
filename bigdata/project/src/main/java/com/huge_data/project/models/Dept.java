@@ -3,9 +3,15 @@ package com.huge_data.project.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @Table(name = "dept")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dept {
 
     @Id
@@ -14,28 +20,4 @@ public class Dept {
     private String dname;
 
     private String loc;
-
-    public Integer getDeptno() {
-        return deptno;
-    }
-
-    public void setDeptno(Integer deptno) {
-        this.deptno = deptno;
-    }
-
-    public String getDname() {
-        return dname;
-    }
-
-    public void setDname(String dname) {
-        this.dname = dname;
-    }
-
-    public String getLoc() {
-        return loc;
-    }
-
-    public void setLoc(String loc) {
-        this.loc = loc;
-    }
 }
