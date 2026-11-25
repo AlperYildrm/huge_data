@@ -1,7 +1,0 @@
-
-Spark data fetch and store to Cassandra loop example:
-Follow the video carefully, and modify it to fulfill project task.
-
-https://www.youtube.com/watch?v=CGT8v8_9i2g&ab_channel=DavisBusteed
-
-For codes to clone: https://github.com/dbusteed/spark-structured-streaming
