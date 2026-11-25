@@ -1,4 +1,4 @@
--- Keyspace and table that w9/pro3.scala writes to and the web app reads from.
+-- Keyspace and table that stream/pro3.scala writes to and the web app reads from.
 
 CREATE KEYSPACE IF NOT EXISTS huge_data
   WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
