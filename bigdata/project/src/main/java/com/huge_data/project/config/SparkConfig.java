@@ -1,4 +1,4 @@
-package com.huge_data.project;
+package com.huge_data.project.config;
 
 import org.apache.spark.sql.SparkSession;
 import org.springframework.context.annotation.Bean;

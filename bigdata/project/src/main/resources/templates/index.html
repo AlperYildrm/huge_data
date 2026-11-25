@@ -57,16 +57,16 @@
             <tbody>
                 <tr>
                     <td>
-                        <img th:src="@{/images/{file}(file=${emp['img']})}"
-                             th:alt="${emp['ename']}"
+                        <img th:src="@{/images/{file}(file=${emp.img})}"
+                             th:alt="${emp.ename}"
                              width="150">
                     </td>
-                    <td th:text="${emp['ename']}">ENAME</td>
-                    <td th:text="${emp['mgr_name']}">MGR_NAME</td>
-                    <td th:text="${emp['sal']}">SALARY</td>
-                    <td th:text="${emp['comm']}">COMMISSION</td>
-                    <td th:text="${emp['dname']}">DEPARTMENT</td>
-                    <td><strong th:text="${#numbers.formatDecimal(emp['total_expense'], 1, 2)}">0.00</strong></td>
+                    <td th:text="${emp.ename}">ENAME</td>
+                    <td th:text="${emp.mgrName}">MGR_NAME</td>
+                    <td th:text="${emp.sal}">SALARY</td>
+                    <td th:text="${emp.comm}">COMMISSION</td>
+                    <td th:text="${emp.dname}">DEPARTMENT</td>
+                    <td><strong th:text="${#numbers.formatDecimal(emp.totalExpense, 1, 2)}">0.00</strong></td>
                 </tr>
             </tbody>
         </table>

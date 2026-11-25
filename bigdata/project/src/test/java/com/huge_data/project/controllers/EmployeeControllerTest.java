@@ -1,51 +1,31 @@
-package com.huge_data.project;
+package com.huge_data.project.controllers;
 
+import com.huge_data.project.dto.DtoEmployeeReport;
+import com.huge_data.project.services.IEmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(EmployeeController.class)
-@Import(EmployeeControllerTest.TestConfig.class)
 class EmployeeControllerTest {
-
-    @TestConfiguration
-    static class TestConfig {
-        @Bean
-        ExpenseSparkService expenseSparkService() {
-            return new ExpenseSparkService(null) {
-                @Override
-                public double getTotalExpense(int empno) {
-                    return 1234.5;
-                }
-            };
-        }
-    }
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
-    private JdbcTemplate jdbcTemplate;
+    private IEmployeeService employeeService;
 
     @Test
     void indexPageRendersSearchFormWithoutCss() throws Exception {
@@ -60,16 +40,17 @@ class EmployeeControllerTest {
 
     @Test
     void searchEmployeeRendersReportDetailsAndImage() throws Exception {
-        Map<String, Object> emp = new HashMap<>();
-        emp.put("empno", 7788);
-        emp.put("ename", "SCOTT");
-        emp.put("mgr_name", "JONES");
-        emp.put("sal", new BigDecimal("3000.00"));
-        emp.put("comm", new BigDecimal("0.00"));
-        emp.put("dname", "RESEARCH");
-        emp.put("img", "scott.jpg");
+        DtoEmployeeReport report = new DtoEmployeeReport();
+        report.setEmpno(7788);
+        report.setEname("SCOTT");
+        report.setMgrName("JONES");
+        report.setSal(new BigDecimal("3000.00"));
+        report.setComm(new BigDecimal("0.00"));
+        report.setDname("RESEARCH");
+        report.setImg("scott.jpg");
+        report.setTotalExpense(1234.5);
 
-        when(jdbcTemplate.queryForList(anyString(), eq("SCOTT"))).thenReturn(List.of(emp));
+        when(employeeService.getEmployeeReport("SCOTT")).thenReturn(Optional.of(report));
 
         mockMvc.perform(get("/").param("ename", "SCOTT"))
                 .andExpect(status().isOk())
@@ -84,7 +65,7 @@ class EmployeeControllerTest {
 
     @Test
     void searchMissingEmployeeRendersError() throws Exception {
-        when(jdbcTemplate.queryForList(anyString(), eq("UNKNOWN"))).thenReturn(List.of());
+        when(employeeService.getEmployeeReport("UNKNOWN")).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/").param("ename", "UNKNOWN"))
                 .andExpect(status().isOk())
