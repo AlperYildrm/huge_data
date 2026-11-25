@@ -1,0 +1,68 @@
+Starting Kafka:
+
+1) Enable zookeeper, kafka
+> sudo systemctl enable zookeper
+> sudo systemctl enable kafka
+
+2) Start servers:
+> sudo systemctl start zookeper
+> sudo systemctl start kafka
+
+3) Create topics:
+> kafka-topics.sh --create --topic SALES --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+> kafka-topics.sh --create --topic OPERATIONS --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+> kafka-topics.sh --create --topic RESEARCH --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+> kafka-topics.sh --create --topic ACCOUNTING --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+
+4) Create consumers:
+> kafka-console-consumer.sh --topic ACCOUNTING --bootstrap-server localhost:9092
+> kafka-console-consumer.sh --topic SALES --bootstrap-server localhost:9092
+> kafka-console-consumer.sh --topic RESEARCH --bootstrap-server localhost:9092
+> kafka-console-consumer.sh --topic OPERATIONS --bootstrap-server localhost:9092
+
+5) Run the POSserver and observe that Kafka channels are working:
+7876, 2025-11-19T12:48:05.030470, Chocolate, Food, 2, 26.90
+7788, 2025-11-19T12:48:07.031970, Tea, Food, 2, 310.90
+7521, 2025-11-19T12:48:20.035043, Chocolate, Food, 2, 26.90
+7934, 2025-11-19T12:48:21.034506, Fridge, Appliances, 2, 4480.00
+7876, 2025-11-19T12:48:29.035122, Banana, Food, 2, 180.00
+7499, 2025-11-19T12:48:33.034548, Chocolate, Food, 2, 26.90
+7782, 2025-11-19T12:48:36.034921, Fridge, Appliances, 2, 4480.00
+
+6) Stop POS server just for now.
+
+7) Start spark. This step must be done on hadoop account. Run the scripts.
+
+> /usr/local/hadoop/sbin/start-dfs.sh
+> /usr/local/hadoop/sbin/start-yarn.sh
+> /usr/local/spark/sbin/start-all.sh
+
+8) Open spark-shell on hadoop account, first downgrade python3.9
+
+> sudo update-alternatives --config python3
+> spark-shell --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3
+
+Write scala code on the shell:
+
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming._
+import org.apache.spark.sql.types._
+
+val spark = SparkSession.builder.appName("Pro3").getOrCreate()
+
+val inputDF = spark.readStream.format("kafka").option("kafka.bootstrap.servers","localhost:9092").option("subscribe", "SALES, RESEARCH, OPERATIONS, ACCOUNTING").load()
+
+val query = inputDF.writeStream.outputMode("update").format("console").start()
+
+9) Stopping:
+
+Stop kafka with systemctl stop kafka
+Stop zookeeper with systemctl stop zookeeper
+Stop spark with shell scripts:
+> /usr/local/hadoop/sbin/stop-dfs.sh
+> /usr/local/hadoop/sbin/stop-yarn.sh
+> /usr/local/spark/sbin/stop-all.sh
+
+Stop cassandra with systemctl stop cassandra
+

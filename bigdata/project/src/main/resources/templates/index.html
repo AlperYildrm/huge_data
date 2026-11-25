@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Expense Report</title>
+</head>
+<body>
+
+    <h1>Employee Expense Report</h1>
+    <p>Kafka - Spark - Cassandra - PostgreSQL - HDFS</p>
+    <hr>
+
+    <form th:action="@{/}" method="get">
+        <label for="ename">Employee Name:</label>
+        <input type="text" id="ename" name="ename" th:value="${param.ename}" placeholder="Enter ename (e.g. SCOTT)" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <p>
+        Quick Search:
+        <a th:href="@{/(ename='SMITH')}">SMITH</a> |
+        <a th:href="@{/(ename='ALLEN')}">ALLEN</a> |
+        <a th:href="@{/(ename='WARD')}">WARD</a> |
+        <a th:href="@{/(ename='JONES')}">JONES</a> |
+        <a th:href="@{/(ename='MARTIN')}">MARTIN</a> |
+        <a th:href="@{/(ename='BLAKE')}">BLAKE</a> |
+        <a th:href="@{/(ename='CLARK')}">CLARK</a> |
+        <a th:href="@{/(ename='SCOTT')}">SCOTT</a> |
+        <a th:href="@{/(ename='KING')}">KING</a> |
+        <a th:href="@{/(ename='TURNER')}">TURNER</a> |
+        <a th:href="@{/(ename='ADAMS')}">ADAMS</a> |
+        <a th:href="@{/(ename='JAMES')}">JAMES</a> |
+        <a th:href="@{/(ename='FORD')}">FORD</a> |
+        <a th:href="@{/(ename='MILLER')}">MILLER</a>
+    </p>
+
+    <div th:if="${error != null}">
+        <hr>
+        <p><strong th:text="${error}">Error message</strong></p>
+    </div>
+
+    <div th:if="${emp != null}">
+        <hr>
+        <h2>Personnel &amp; Cumulative Expense Details</h2>
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Employee Name</th>
+                    <th>Manager Name</th>
+                    <th>Salary</th>
+                    <th>Commission</th>
+                    <th>Department</th>
+                    <th>Total Expense</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img th:src="@{/images/{file}(file=${emp['img']})}"
+                             th:alt="${emp['ename']}"
+                             width="150">
+                    </td>
+                    <td th:text="${emp['ename']}">ENAME</td>
+                    <td th:text="${emp['mgr_name']}">MGR_NAME</td>
+                    <td th:text="${emp['sal']}">SALARY</td>
+                    <td th:text="${emp['comm']}">COMMISSION</td>
+                    <td th:text="${emp['dname']}">DEPARTMENT</td>
+                    <td><strong th:text="${#numbers.formatDecimal(emp['total_expense'], 1, 2)}">0.00</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+[2026-11-24T16:08:35.398+0300][gc] Using G1
+[2026-11-24T16:08:35.400+0300][gc,init] Version: 17.0.6+10-jvmci-22.3-b13 (release)
+[2026-11-24T16:08:35.400+0300][gc,init] CPUs: 32 total, 32 available
+[2026-11-24T16:08:35.400+0300][gc,init] Memory: 15839M
+[2026-11-24T16:08:35.400+0300][gc,init] Large Page Support: Disabled
+[2026-11-24T16:08:35.400+0300][gc,init] NUMA Support: Disabled
+[2026-11-24T16:08:35.400+0300][gc,init] Compressed Oops: Enabled (32-bit)
+[2026-11-24T16:08:35.400+0300][gc,init] Heap Region Size: 1M
+[2026-11-24T16:08:35.400+0300][gc,init] Heap Min Capacity: 512M
+[2026-11-24T16:08:35.400+0300][gc,init] Heap Initial Capacity: 512M
+[2026-11-24T16:08:35.400+0300][gc,init] Heap Max Capacity: 512M
+[2026-11-24T16:08:35.400+0300][gc,init] Pre-touch: Disabled
+[2026-11-24T16:08:35.400+0300][gc,init] Parallel Workers: 23
+[2026-11-24T16:08:35.400+0300][gc,init] Concurrent Workers: 6
+[2026-11-24T16:08:35.400+0300][gc,init] Concurrent Refinement Workers: 23
+[2026-11-24T16:08:35.400+0300][gc,init] Periodic GC: Disabled
+[2026-11-24T16:08:35.400+0300][gc,metaspace] CDS archive(s) mapped at: [0x0000000800000000-0x0000000800bc9000-0x0000000800bc9000), size 12357632, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+[2026-11-24T16:08:35.400+0300][gc,metaspace] Compressed class space mapped at: 0x0000000800c00000-0x0000000840c00000, reserved size: 1073741824
+[2026-11-24T16:08:35.400+0300][gc,metaspace] Narrow klass base: 0x0000000800000000, Narrow klass shift: 0, Narrow klass range: 0x100000000
+[2026-11-24T16:08:35.804+0300][gc,start    ] GC(0) Pause Young (Normal) (G1 Evacuation Pause)
+[2026-11-24T16:08:35.806+0300][gc,task     ] GC(0) Using 12 workers of 23 for evacuation
+[2026-11-24T16:08:35.808+0300][gc,phases   ] GC(0)   Pre Evacuate Collection Set: 0.1ms
+[2026-11-24T16:08:35.808+0300][gc,phases   ] GC(0)   Merge Heap Roots: 0.1ms
+[2026-11-24T16:08:35.808+0300][gc,phases   ] GC(0)   Evacuate Collection Set: 2.0ms
+[2026-11-24T16:08:35.808+0300][gc,phases   ] GC(0)   Post Evacuate Collection Set: 0.4ms
+[2026-11-24T16:08:35.808+0300][gc,phases   ] GC(0)   Other: 1.3ms
+[2026-11-24T16:08:35.808+0300][gc,heap     ] GC(0) Eden regions: 25->0(21)
+[2026-11-24T16:08:35.808+0300][gc,heap     ] GC(0) Survivor regions: 0->4(4)
+[2026-11-24T16:08:35.808+0300][gc,heap     ] GC(0) Old regions: 0->4
+[2026-11-24T16:08:35.808+0300][gc,heap     ] GC(0) Archive regions: 2->2
+[2026-11-24T16:08:35.808+0300][gc,heap     ] GC(0) Humongous regions: 0->0
+[2026-11-24T16:08:35.808+0300][gc,metaspace] GC(0) Metaspace: 7867K(8000K)->7867K(8000K) NonClass: 7042K(7104K)->7042K(7104K) Class: 825K(896K)->825K(896K)
+[2026-11-24T16:08:35.808+0300][gc          ] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 25M->8M(512M) 3.970ms
+[2026-11-24T16:08:35.808+0300][gc,cpu      ] GC(0) User=0.01s Sys=0.01s Real=0.00s
+[2026-11-24T18:52:02.701+0300][gc,start    ] GC(1) Pause Young (Normal) (G1 Evacuation Pause)
+[2026-11-24T18:52:02.701+0300][gc,task     ] GC(1) Using 12 workers of 23 for evacuation
+[2026-11-24T18:52:02.711+0300][gc,phases   ] GC(1)   Pre Evacuate Collection Set: 1.0ms
+[2026-11-24T18:52:02.711+0300][gc,phases   ] GC(1)   Merge Heap Roots: 0.3ms
+[2026-11-24T18:52:02.711+0300][gc,phases   ] GC(1)   Evacuate Collection Set: 7.3ms
+[2026-11-24T18:52:02.711+0300][gc,phases   ] GC(1)   Post Evacuate Collection Set: 1.3ms
+[2026-11-24T18:52:02.711+0300][gc,phases   ] GC(1)   Other: 0.5ms
+[2026-11-24T18:52:02.711+0300][gc,heap     ] GC(1) Eden regions: 21->0(24)
+[2026-11-24T18:52:02.711+0300][gc,heap     ] GC(1) Survivor regions: 4->1(4)
+[2026-11-24T18:52:02.711+0300][gc,heap     ] GC(1) Old regions: 4->8
+[2026-11-24T18:52:02.711+0300][gc,heap     ] GC(1) Archive regions: 2->2
+[2026-11-24T18:52:02.711+0300][gc,heap     ] GC(1) Humongous regions: 0->0
+[2026-11-24T18:52:02.711+0300][gc,metaspace] GC(1) Metaspace: 9531K(9728K)->9531K(9728K) NonClass: 8600K(8704K)->8600K(8704K) Class: 930K(1024K)->930K(1024K)
+[2026-11-24T18:52:02.711+0300][gc          ] GC(1) Pause Young (Normal) (G1 Evacuation Pause) 29M->9M(512M) 10.511ms
+[2026-11-24T18:52:02.711+0300][gc,cpu      ] GC(1) User=0.08s Sys=0.01s Real=0.01s

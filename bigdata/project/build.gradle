@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.2.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.huge-data'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+configurations.configureEach {
+	exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+	exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+	exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j2-impl'
+	exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+	resolutionStrategy.capabilitiesResolution.withCapability('org.lz4:lz4-java') {
+		selectHighestVersion()
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-kafka'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	
+	implementation 'org.apache.spark:spark-sql_2.12:3.5.5'
+	implementation 'com.datastax.spark:spark-cassandra-connector_2.12:3.5.1'
+
+	
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+	implementation 'com.fasterxml.jackson.module:jackson-module-scala_2.12:2.15.2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-kafka-test') {
+		exclude group: 'org.apache.kafka', module: 'kafka_2.13'
+	}
+	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('bootRun') {
+	jvmArgs = [
+		'--add-opens=java.base/java.nio=ALL-UNNAMED',
+		'--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
+		'--add-opens=java.base/java.lang=ALL-UNNAMED',
+		'--add-opens=java.base/java.util=ALL-UNNAMED'
+	]
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
