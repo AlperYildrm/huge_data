@@ -39,7 +39,7 @@ val query = parsedDF
         .save()
     }
   }
-  .option("checkpointLocation", "/home/alper/bigdata/spark-checkpoint")
+  .option("checkpointLocation", sys.props("user.home") + "/bigdata/spark-checkpoint")
   .outputMode("append")
   .start()
 
